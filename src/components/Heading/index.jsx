@@ -1,8 +1,7 @@
-import P from 'prop-types';
-import { useCounterContext } from '../../contexts/CounterContext';
+import { useMyCounterContext } from '../../contexts/CounterContext';
 
 export const Heading = () => {
-  const [state, actions] = useCounterContext();
+  const [count, setCount] = useMyCounterContext();
 
-  return <h1 style={{ fontSize: '60px' }}>{state.counter}</h1>;
+  return <h1>{count.counter}</h1>;
 };

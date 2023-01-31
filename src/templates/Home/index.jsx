@@ -1,34 +1,37 @@
+import { useMyCounterContext } from '../../contexts/CounterContext';
 import { useEffect, useState } from 'react';
 import { Button } from '../../components/Button';
 import { Heading } from '../../components/Heading';
-import { useCounterContext } from '../../contexts/CounterContext';
+import '../../styles/global-styles.css';
 
 export const Home = () => {
-  const [state, actions] = useCounterContext();
-
-  const handleError = () => {
-    actions
-      .asyncError()
-      .then((r) => console.log(r))
-      .catch((e) => console.log(e.name, ':', e.message));
-  };
+  const [count, setCount] = useMyCounterContext();
 
   return (
-    <div>
+    <div className="title-counter">
       <Heading />
-
-      <div>
-        <Button onButtonClick={actions.increase}>increase</Button>
-        <Button onButtonClick={actions.decrease}>decrease</Button>
-        <Button onButtonClick={actions.reset}>reset</Button>
-        <Button onButtonClick={() => actions.setCounter({ counter: 10 })}>set 10</Button>
-        <Button onButtonClick={() => actions.setCounter({ counter: 100 })}>set 100</Button>
-        <Button disabled={state.loading} onButtonClick={actions.asyncIncrease}>
-          async increase
-        </Button>
-        <Button disabled={state.loading} onButtonClick={handleError}>
-          async error
-        </Button>
+      <div className="btn">
+        <Button text="INCREASE" eventClick={setCount.increase} />
+        <Button text="DECREASE" eventClick={setCount.decrease} />
+        <Button text="RESET" eventClick={setCount.reset} />
+        <Button
+          text="SET-10"
+          eventClick={() => setCount.setCounter({ counter: 10 })}
+        />
+        <Button
+          text="SET-100"
+          eventClick={() => setCount.setCounter({ counter: 100 })}
+        />
+        <Button
+          dis={count.loading}
+          text="ASYNC-INCREASE"
+          eventClick={setCount.asyncIncrease}
+        />
+        <Button
+          dis={count.loading}
+          text="ASYNC-ERROR"
+          eventClick={setCount.asyncError}
+        />
       </div>
     </div>
   );
